@@ -1,5 +1,5 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sidhsksjsjsh/VAPE-UI-MODDED/main/.lua"))()
-local wndw = lib:Window("VIP Turtle Hub V4")
+local wndw = lib:Window("VIP Turtle Hub V4 - " .. lib:ColorFonts("THE PAID VERSION IS OUT WITH DIFF FEATURE!","Sky Blue"))
 local T1 = wndw:Tab("Main")
 local T2 = wndw:Tab("Hatch")
 local T3 = wndw:Tab("Fight")
