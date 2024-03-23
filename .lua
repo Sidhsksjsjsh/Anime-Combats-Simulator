@@ -39,8 +39,10 @@ local function children(path,funct)
 end
 
 children(workspace.Worlds,function(a)
-    lib:AddTable(a.Gameplay.EggStands,const.egg.table)
-    lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
+    if a.Name ~= "EggHunt" then
+      lib:AddTable(a.Gameplay.EggStands,const.egg.table)
+      lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
+    end
 end)
 
 T1:Toggle("Auto click",false,function(value)
