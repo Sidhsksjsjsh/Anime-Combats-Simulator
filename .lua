@@ -1,9 +1,10 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sidhsksjsjsh/VAPE-UI-MODDED/main/.lua"))()
-local wndw = lib:Window("VIP Turtle Hub V4 - " .. lib:ColorFonts("THE PAID VERSION IS OUT WITH DIFF FEATURE!","Sky Blue"))
+local wndw = lib:Window("VIP Turtle Hub V4 - " .. lib:ColorFonts("CREATED BY FAHRI & TURTLE TEAM","Sky Blue"))
 local T1 = wndw:Tab("Main")
 local T2 = wndw:Tab("Hatch")
 local T3 = wndw:Tab("Fight")
 local T4 = wndw:Tab("Other stuff")
+local T5 = wndw:Tab("Credits")
 
 local player = game:GetService("Players")
 local self = player.LocalPlayer
@@ -25,6 +26,23 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
   },
   easterfarm = false,
   trade = false,
+  codes = {
+    "DUAL",
+    "Booroboroboro",
+    "500k",
+    "TY<3",
+    "BETA",
+    "LIKES10K",
+    "DELAYYY", --EXPIRED
+    "LIKES5K",
+    "storalus",
+    "LIKES2500",
+    "LIKES1000",
+    "RBXNews",
+    "Noah",
+    "Spax",
+    "RELEASE"
+  }
 }
 
 local function descent(path,funct)
@@ -128,7 +146,6 @@ T4:Toggle("Auto teleport to a hidden easter egg [ Event Quest ]",false,function(
     end
 end)
 
-if self.Name == "Rivanda_Cheater" then
 T4:Toggle("Auto spam trade",false,function(value)
     const.trade = value
     while wait() do
@@ -138,7 +155,23 @@ T4:Toggle("Auto spam trade",false,function(value)
       end)
     end
 end)
-end
+
+T4:Button("Redeem all codes",function()
+      for array = 1,#const.codes do
+        game:GetService("ReplicatedStorage")["Remotes"]["Codes"]["Reedem"]:FireServer(const.codes[array])
+      end
+end)
+
+T4:Button("Claim all unlocked season rewards",function()
+      for array = 1,30 do
+        game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("Season_ClaimReward","d591d368-7d3c-4c16-9322-bfd95a219187",array,"Basic")
+      end
+end)
+
+T5:Label(lib:ColorFonts("Fahri - VS Scripting, Scripting & CEO","Sky Blue"))
+T5:Label(lib:ColorFonts("Asya & Aril - UI Scripting ( modified UI )","Sky Blue"))
+T5:Label(lib:ColorFonts("Akbar - Bug hunter","Sky Blue"))
+T5:Label(lib:ColorFonts("The remaining members not listed here because they are part of programming vanguard","Red"))
 
 --self:GetAttribute("RegionIn")
 --Workspace.Worlds.EggHunt.Gameplay.Enemies.EnemyTest_Weapon.Rig.EnemyTagX.EnemyName
