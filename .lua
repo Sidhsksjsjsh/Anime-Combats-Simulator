@@ -23,7 +23,8 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
     name = "null",
     toggle = false
   },
-  easterfarm = false
+  easterfarm = false,
+  trade = false,
 }
 
 local function descent(path,funct)
@@ -38,12 +39,18 @@ local function children(path,funct)
   end
 end
 
---[[children(workspace.Worlds["EggHunt"],function(a)
-    if a.Name:find("Gameplay") then
-      lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
+local function AsyncPlayers(funct)
+  for i,v in pairs(player:GetPlayers()) do
+    funct(v)
+  end
+end
+
+children(workspace.Worlds,function(a)
+    if a.Name ~= "EggHunt" then
+      lib:AddTable(a.Gameplay.EggStands,const.egg.table)
     end
 end)
-]]
+
 T1:Toggle("Auto click",false,function(value)
     const.click = value
     while wait() do
@@ -120,6 +127,19 @@ T4:Toggle("Auto teleport to a hidden easter egg [ Event Quest ]",false,function(
       end)
     end
 end)
+
+if self.Name == "Rivanda_Cheater" then
+T4:Toggle("Auto spam trade",false,function(value)
+    const.trade = value
+    while wait() do
+      if const.trade == false then break end
+      AsyncPlayers(function(v)
+          game:GetService("ReplicatedStorage")["Remotes"]["Trading"]["Request"]:FireServer("Request",v.Name)
+      end)
+    end
+end)
+end
+
 --self:GetAttribute("RegionIn")
 --Workspace.Worlds.EggHunt.Gameplay.Enemies.EnemyTest_Weapon.Rig.EnemyTagX.EnemyName
 task.spawn(function()
