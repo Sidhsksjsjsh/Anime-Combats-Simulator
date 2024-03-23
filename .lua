@@ -25,11 +25,7 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
   },
   easterfarm = false
 }
---[[
-EnemyTest_Weapon : 4x
-EnemyTest_Punch : 4x
-EnemyTest_Beam : 1x
-]]
+
 local function descent(path,funct)
   for i,v in pairs(path:GetDescendants()) do
     funct(v)
@@ -42,12 +38,12 @@ local function children(path,funct)
   end
 end
 
-children(workspace.Worlds["EggHunt"],function(a)
+--[[children(workspace.Worlds["EggHunt"],function(a)
     if a.Name:find("Gameplay") then
       lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
     end
 end)
-
+]]
 T1:Toggle("Auto click",false,function(value)
     const.click = value
     while wait() do
