@@ -104,12 +104,10 @@ T3:Toggle("Auto fight",false,function(value)
     const.enemy.toggle = value
     while wait() do
       if const.enemy.toggle == false then break end
-      children(workspace.Worlds,function(array)
-          descent(array.Gameplay.Enemies,function(inject)
-              if inject:IsA("ProximityPrompt") then
-                fireproximityprompt(inject)
-              end
-          end)
+      descent(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name],function(inject)
+          if inject:IsA("ProximityPrompt") then
+              fireproximityprompt(inject)
+          end
       end)
     end
 end)
@@ -123,15 +121,14 @@ T4:Toggle("Auto teleport to a hidden easter egg [ Event Quest ]",false,function(
       end)
     end
 end)
+--self:GetAttribute("RegionIn")
 
 task.spawn(function()
     while wait() do
-      children(workspace.Worlds,function(array)
-          if const.enemy.name ~= "null" then
-            lbl:EditLabel("Boss name : " .. lib:ColorFonts(array.Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(array.Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(array.Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
-          else
-            lbl:EditLabel("Boss name : " .. lib:ColorFonts("#BOSS_NAME","Red") .. "\nStrength : " .. lib:ColorFonts("#BOSS_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts("#BOSS_RANK","Red"))
-          end
-      end)
+      if const.enemy.name ~= "null" then
+         lbl:EditLabel("Boss name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
+      else
+          lbl:EditLabel("Boss name : " .. lib:ColorFonts("#BOSS_NAME","Red") .. "\nStrength : " .. lib:ColorFonts("#BOSS_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts("#BOSS_RANK","Red"))
+      end
     end
 end)
