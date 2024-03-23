@@ -8,7 +8,7 @@ local T4 = wndw:Tab("Other stuff")
 local player = game:GetService("Players")
 local self = player.LocalPlayer
 local workspace = game:GetService("Workspace")
-local const = {
+local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.RankTxt
   click = false,
   reb = false,
   session = false,
@@ -19,7 +19,7 @@ local const = {
     easter = false
   },
   enemy = {
-    table = {},
+    table = {"Enemy1","Enemy2","Enemy3","Enemy4","Enemy5","Enemy6"},
     name = "null",
     toggle = false
   },
@@ -38,11 +38,8 @@ local function children(path,funct)
   end
 end
 
-children(workspace.Worlds,function(a)
-    if a.Name ~= "EggHunt" then
-      lib:AddTable(a.Gameplay.EggStands,const.egg.table)
-      lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
-    end
+children(workspace.Worlds["EggHunt"],function(a)
+    lib:AddTable(a.Gameplay.Enemies,const.enemy.table)
 end)
 
 T1:Toggle("Auto click",false,function(value)
@@ -122,11 +119,15 @@ T4:Toggle("Auto teleport to a hidden easter egg [ Event Quest ]",false,function(
     end
 end)
 --self:GetAttribute("RegionIn")
-
+--Workspace.Worlds.EggHunt.Gameplay.Enemies.EnemyTest_Weapon.Rig.EnemyTagX.EnemyName
 task.spawn(function()
     while wait() do
       if const.enemy.name ~= "null" then
-         lbl:EditLabel("Boss name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
+        if self:GetAttribute("RegionIn") == "EggHunt" then
+          lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds["EggHunt"].Gameplay.Enemies[const.enemy.name].Rig.EnemyTagX.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts("#ENEMY_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds["EggHunt"].Gameplay.Enemies[const.enemy.name].Rig.EnemyTagX.RankTxt.Text,"Red"))
+        else
+          lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
+        end
       else
           lbl:EditLabel("Boss name : " .. lib:ColorFonts("#BOSS_NAME","Red") .. "\nStrength : " .. lib:ColorFonts("#BOSS_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts("#BOSS_RANK","Red"))
       end
