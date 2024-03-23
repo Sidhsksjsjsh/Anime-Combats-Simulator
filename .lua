@@ -19,13 +19,17 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
     easter = false
   },
   enemy = {
-    table = {"Enemy1","Enemy2","Enemy3","Enemy4","Enemy5","Enemy6"},
+    table = {"Enemy1","Enemy2","Enemy3","Enemy4","Enemy5","Enemy6","EnemyTest_Weapon","EnemyTest_Punch","EnemyTest_Beam"},
     name = "null",
     toggle = false
   },
   easterfarm = false
 }
-
+--[[
+EnemyTest_Weapon : 4x
+EnemyTest_Punch : 4x
+EnemyTest_Beam : 1x
+]]
 local function descent(path,funct)
   for i,v in pairs(path:GetDescendants()) do
     funct(v)
@@ -125,9 +129,7 @@ end)
 task.spawn(function()
     while wait() do
       if const.enemy.name ~= "null" then
-        if self:GetAttribute("RegionIn") == "EggHunt" then
-          lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds["EggHunt"].Gameplay.Enemies[const.enemy.name].Rig.EnemyTagX.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts("#ENEMY_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds["EggHunt"].Gameplay.Enemies[const.enemy.name].Rig.EnemyTagX.RankTxt.Text,"Red"))
-        else
+        if self:GetAttribute("RegionIn") ~= "EggHunt" and const.enemy.name:sub(1,5) == "Enemy" then
           lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
         end
       else
