@@ -42,7 +42,8 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
     "Noah",
     "Spax",
     "RELEASE"
-  }
+  },
+  easterfarm2 = false
 }
 
 local function descent(path,funct)
@@ -146,6 +147,16 @@ T4:Toggle("Auto teleport to a hidden easter egg [ Event Quest ]",false,function(
     end
 end)
 
+T4:Toggle("Auto bring all hidden easter egg [ Event Quest ]",false,function(value)
+    const.easterfarm2 = value
+    while wait() do
+      if const.easterfarm2 == false then break end
+      children(workspace["EGG HUNT"].EggSpawns,function(v)
+          v.CFrame = self.Character.HumanoidRootPart.CFrame
+      end)
+    end
+end)
+
 T4:Toggle("Auto spam trade",false,function(value)
     const.trade = value
     while wait() do
@@ -168,17 +179,21 @@ T4:Button("Claim all unlocked season rewards",function()
       end
 end)
 
+T4:Button("Claim all rewards",function()
+    game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("ClaimPlaytimeGift","b2d967ba-f34e-4ea9-96cf-676b0ecaabcd",9e9)
+end)
+
 T5:Label(lib:ColorFonts("Fahri - VS Scripting, Scripting & CEO","Sky Blue"))
 T5:Label(lib:ColorFonts("Asya & Aril - UI Scripting ( modified UI )","Sky Blue"))
 T5:Label(lib:ColorFonts("Akbar - Bug hunter","Sky Blue"))
-T5:Label(lib:ColorFonts("The remaining members not listed here because they are part of programming vanguard","Red"))
+T5:Label(lib:ColorFonts("The remaining members not listed here \nbecause they are part of programming vanguard","Red"))
 
 --self:GetAttribute("RegionIn")
 --Workspace.Worlds.EggHunt.Gameplay.Enemies.EnemyTest_Weapon.Rig.EnemyTagX.EnemyName
 task.spawn(function()
     while wait() do
       if const.enemy.name ~= "null" then
-        if self:GetAttribute("RegionIn") ~= "EggHunt" and const.enemy.name:sub(1,5) == "Enemy" then
+        if self:GetAttribute("RegionIn") ~= "EggHunt" then
           lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
         end
       else
