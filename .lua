@@ -144,11 +144,12 @@ end)
 
 T3:Toggle("Auto fight",false,function(value)
     const.enemy.toggle = value
-    while wait(0.5) do
+    while wait() do
       if const.enemy.toggle == false then break end
       descent(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name],function(inject)
           if inject:IsA("ProximityPrompt") then
             if self.PlayerGui.Combat.Enabled == false then
+              wait(0.5)
               fireproximityprompt(inject)
             end
           end
