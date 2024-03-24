@@ -144,7 +144,7 @@ end)
 
 T3:Toggle("Auto fight",false,function(value)
     const.enemy.toggle = value
-    while wait() do
+    while wait(0.5) do
       if const.enemy.toggle == false then break end
       descent(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name],function(inject)
           if inject:IsA("ProximityPrompt") then
@@ -212,7 +212,7 @@ T4:Toggle("Auto claim all online rewards",false,function(value)
     const.reward = value
     while wait() do
       if const.reward == false then break end
-        game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("ClaimPlaytimeGift","b2d967ba-f34e-4ea9-96cf-676b0ecaabcd",5000)
+        game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("ClaimPlaytimeGift","b2d967ba-f34e-4ea9-96cf-676b0ecaabcd",1500)
     end
 end)
 
