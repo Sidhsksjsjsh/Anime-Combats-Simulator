@@ -5,6 +5,7 @@ local T2 = wndw:Tab("Hatch")
 local T3 = wndw:Tab("Fight")
 local T4 = wndw:Tab("Other stuff")
 local T5 = wndw:Tab("Credits")
+local T6 = wndw:Tab("Status")
 
 local player = game:GetService("Players")
 local self = player.LocalPlayer
@@ -43,7 +44,9 @@ local const = { -- Workspace.Worlds.World1.Gameplay.Enemies.Enemy5.Rig.EnemyTag.
     "Spax",
     "RELEASE"
   },
-  easterfarm2 = false
+  easterfarm2 = false,
+  reward = false,
+  xraymeta = false
 }
 
 local function descent(path,funct)
@@ -61,6 +64,20 @@ end
 local function AsyncPlayers(funct)
   for i,v in pairs(player:GetPlayers()) do
     funct(v)
+  end
+end
+
+local function detectEggs(v)
+  if const.xraymeta == true then
+    local esp = Instance.new("Highlight")
+    esp.Name = "XRAY"
+    esp.FillColor = Color3.new(0,1,0)
+    esp.OutlineColor = Color3.new(1,1,1)
+    esp.FillTransparency = 0
+    esp.OutlineTransparency = 1
+    esp.Adornee = v
+    esp.Parent = v
+    esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
   end
 end
 
@@ -131,7 +148,9 @@ T3:Toggle("Auto fight",false,function(value)
       if const.enemy.toggle == false then break end
       descent(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name],function(inject)
           if inject:IsA("ProximityPrompt") then
+            if self.PlayerGui.Combat.Enabled == false then
               fireproximityprompt(inject)
+            end
           end
       end)
     end
@@ -157,6 +176,16 @@ T4:Toggle("Auto bring all hidden easter egg [ Event Quest ]",false,function(valu
     end
 end)
 
+T4:Toggle("Chams all hidden easter egg [ Event Quest ]",false,function(value)
+    const.xraymeta = value
+    children(workspace["EGG HUNT"].EggSpawns,function(v)
+        detectEggs(v)
+        if value == false and v:FindFirstChild("XRAY") then
+          v["XRAY"]:Destroy()
+        end
+    end)
+end)
+
 T4:Toggle("Auto spam trade",false,function(value)
     const.trade = value
     while wait() do
@@ -179,8 +208,12 @@ T4:Button("Claim all unlocked season rewards",function()
       end
 end)
 
-T4:Button("Claim all rewards",function()
-    game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("ClaimPlaytimeGift","b2d967ba-f34e-4ea9-96cf-676b0ecaabcd",9e9)
+T4:Toggle("Auto claim all online rewards",false,function(value)
+    const.reward = value
+    while wait() do
+      if const.reward == false then break end
+        game:GetService("ReplicatedStorage")["Postie"]["Sent"]:FireServer("ClaimPlaytimeGift","b2d967ba-f34e-4ea9-96cf-676b0ecaabcd",5000)
+    end
 end)
 
 T5:Label(lib:ColorFonts("Fahri - VS Scripting, Scripting & CEO","Sky Blue"))
@@ -188,6 +221,12 @@ T5:Label(lib:ColorFonts("Asya & Aril - UI Scripting ( modified UI )","Sky Blue")
 T5:Label(lib:ColorFonts("Akbar - Bug hunter","Sky Blue"))
 T5:Label(lib:ColorFonts("The remaining members not listed here \nbecause they are part of programming vanguard","Red"))
 
+T6:Label("API : " .. lib:ColorFonts("ONLINE","Green"))
+T6:Label("Service : " .. lib:ColorFonts("ONLINE","Green"))
+T6:Label("Webhook : " .. lib:ColorFonts("OFFLINE","Red"))
+T6:Label("AC Detection : " .. lib:ColorFonts("ONLINE","Green"))
+T6:Label("Remote Detection : " .. lib:ColorFonts("ONLINE","Green"))
+T6:Label("Total : " .. lib:ColorFonts("4 ONLINE","Green") .. " • " .. lib:ColorFonts("1 OFFLINE","Red") .. "\nPercentage : " .. lib:ColorFonts("null","Red"))
 --self:GetAttribute("RegionIn")
 --Workspace.Worlds.EggHunt.Gameplay.Enemies.EnemyTest_Weapon.Rig.EnemyTagX.EnemyName
 task.spawn(function()
@@ -195,9 +234,13 @@ task.spawn(function()
       if const.enemy.name ~= "null" then
         if self:GetAttribute("RegionIn") ~= "EggHunt" then
           lbl:EditLabel("Enemy name : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.EnemyName.Text,"Red") .. "\nStrength : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.StrengthFrame.Strength.Text,"Red") .. "\nRank : " .. lib:ColorFonts(workspace.Worlds[self:GetAttribute("RegionIn")].Gameplay.Enemies[const.enemy.name].Rig.EnemyTag.RankTxt.Text,"Red"))
+        else
+          lbl:EditLabel("Boss name : " .. lib:ColorFonts("#BOSS_NAME","Red") .. "\nStrength : " .. lib:ColorFonts("#BOSS_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts("#BOSS_RANK","Red"))
         end
       else
           lbl:EditLabel("Boss name : " .. lib:ColorFonts("#BOSS_NAME","Red") .. "\nStrength : " .. lib:ColorFonts("#BOSS_STRENGTH","Red") .. "\nRank : " .. lib:ColorFonts("#BOSS_RANK","Red"))
       end
     end
 end)
+
+--Players.Rivanda_Cheater.CombatMode
