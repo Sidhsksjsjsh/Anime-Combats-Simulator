@@ -82,7 +82,7 @@ local function detectEggs(v)
 end
 
 children(workspace.Worlds,function(a)
-    if a.Name ~= "AdidasStore" then
+    if a.Name:sub(1,5) == "World" then --a.Name ~= "AdidasStore" then
       lib:AddTable(a.Gameplay.EggStands,const.egg.table)
     end
 end)
